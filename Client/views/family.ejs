@@ -1,0 +1,205 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Family | Gov-Doc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5ef28b2280.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    header {
+        position: relative;
+        z-index: 3;
+        height: 4rem;
+        width: 100vw;
+        background-color: white;
+        box-shadow: 4px 21px 20px -28px rgba(0,0,0,0.45);
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f3f3f3;;
+    }
+
+    nav {
+        position: absolute;
+        height: 100vh;
+        width: 4rem;
+        background-color: white;
+    }
+
+    main {
+        margin-left: 5rem;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    main h2 {
+        text-align: center;
+        margin-left: 2rem;
+        border-radius: 5px;
+        width: 200px;
+        background-color: white;
+        color: #0099ff;
+    }
+
+    .member {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 1rem;
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        background-color: white;
+        min-width: 250px;
+        min-height: 100px;
+        box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1);
+    }
+
+    .member img {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background-color: #f3f3f3;
+    }
+
+    .info {
+        margin-left: 2rem;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav li {
+        margin: 1.5rem;
+    }
+
+    header .user-profile {
+        border: 0.1rem solid black;
+        border-radius: 25px;
+        padding: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0.8rem;
+        margin-right: 2rem;
+    }
+
+</style>
+
+<body>
+    <header>
+        <i class="fa-solid fa-bars fa-2xl" style="margin-top: 1.8rem; margin-left: 1rem;"></i>
+        <div class="user-profile">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="username">UserName</span>
+        </div>
+    </header>
+    
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li>
+                <a href="/home">
+                    <i class="fa-solid fa-house fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/family">
+                    <i class="fa-solid fa-user fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/upload">
+                    <i class="fa-solid fa-cloud-arrow-up fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/documents">
+                    <i class="fa-solid fa-folder fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/about-us">
+                    <i class="fa-solid fa-circle-info fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Family Members</h2>
+        <div class="container">
+            <div class="member">
+                <div class="profile">
+                    <img src="assets/user.png" alt="user">
+                </div>
+                <div class="info">
+                    <h4>You</h4>
+                </div>
+            </div>
+        </div>
+        <div class="familyID">
+            
+        </div>
+    </main>
+
+    <script>
+        const container = document.querySelector('.container');
+
+        document.querySelector('.username').innerHTML = localStorage.getItem('username')
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                fetch(`/getUser/?familyId=${familyId}`,{
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify()
+                })
+                .then(res => res.json())
+                .then((data) => {
+                    data.forEach(elem => {
+                        addMembers(elem);
+                    });
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        const addMembers = (data) => {
+            const member = document.createElement('div');
+            member.classList.add('member');
+            
+            member.innerHTML = `
+                <div class="profile">
+                    <img src="${profileImage}" alt="user">
+                </div>
+                <div class="info">
+                    <h4>${data.username}</h4>
+                    <p>${data.adhaarNo}</p>
+                </div>
+            `
+            container.appendChild(member);
+        }
+    </script>
+</body>
+</html>

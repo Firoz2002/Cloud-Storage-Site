@@ -1,0 +1,225 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload | Gov-Doc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5ef28b2280.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    header {
+        position: relative;
+        z-index: 3;
+        height: 4rem;
+        width: 100vw;
+        background-color: white;
+        box-shadow: 4px 21px 20px -28px rgba(0,0,0,0.45);
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f3f3f3;;
+    }
+
+    nav {
+        position: absolute;
+        height: 100vh;
+        width: 4rem;
+        background-color: white;
+    }
+
+    main {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5rem;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .container {
+        background-color: white;
+        padding: 4rem 8rem 4rem 8rem;
+        border: 5px dashed black;
+    }
+
+    .upload-btn img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav li {
+        margin: 1.5rem;
+    }
+
+    header .user-profile {
+        border: 0.1rem solid black;
+        border-radius: 25px;
+        padding: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0.8rem;
+        margin-right: 2rem;
+    }
+
+    button {
+        margin-top: 1rem;
+        position: absolute;
+        width: 120px;
+        height: 50px;
+        border: 0;
+        outline: none;
+        background: #2b2d42;
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 40px;
+        text-align: center;
+        box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .checked {
+        width: 75px;
+        height: 75px;
+        border-radius: 40px;
+        box-shadow: 0 0 12px -2px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top:-15px;
+        right: -40px;
+        opacity: 0;
+        background: #d90429;
+    }
+    .checked svg {
+        width: 40px;
+        margin: 20px;
+    }
+    .checked path {
+        stroke-width: 3;
+        stroke: #fff;
+        stroke-dasharray: 34;
+        stroke-dashoffset: 34;
+        stroke-linecap: round;
+    }
+    .active {
+        background: #d90429;
+        transition: 1s;
+    }
+    .active p {
+        transition: 1s;
+        margin-right: 100px;
+    }
+    .active .checked {
+        opacity: 1;
+        transition: 1s;
+        right: 0;
+    }
+    .active .checked path {
+        transition: 1s;
+        transition-delay: 1s;
+        stroke-dashoffset: 0;
+    }
+</style>
+
+<body>
+    <header>
+        <i class="fa-solid fa-bars fa-2xl" style="margin-top: 1.8rem; margin-left: 1rem;"></i>
+        <div class="user-profile">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="username">UserName</span>
+        </div>
+    </header>
+    
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li>
+                <a href="/home">
+                    <i class="fa-solid fa-house fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/family">
+                    <i class="fa-solid fa-user fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/upload">
+                    <i class="fa-solid fa-cloud-arrow-up fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/documents">
+                    <i class="fa-solid fa-folder fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/about-us">
+                    <i class="fa-solid fa-circle-info fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="wrapper">
+            <div class="container">
+                <input type="file" accept="image/*,.pdf" id="upload" name="filename" hidden>
+                <label for="upload" class="upload-btn"><img src="assets/upload.png" alt="upload" class="up"></label>
+            </div>
+
+            <button id="btn">
+                <p id="btnText">Submit</p>
+                <div class="checked">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                    <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+                  </svg>
+                </div>
+            </button>
+        </div>
+        
+        
+    </main>
+
+    <script>
+        const uploadFile = document.querySelector('#upload');
+        var btn = document.getElementById("btn");
+        var btnText = document.getElementById("btnText");
+        document.querySelector('.username').innerHTML = localStorage.getItem('username')
+
+        btn.addEventListener('click', () => {
+            btnText.innerHTML = "Uploading"
+            //document.querySelector('.container').style.backgroundImage = 'url(assets/document.png)'
+            const [file] = uploadFile.files;
+            
+            const formdata = new FormData();
+            formdata.append('document', file);
+
+            fetch('/upload', {
+                method: 'Post',
+                body: formdata
+            })
+            .then(res => res.json())
+            .then(data => {
+                btnText.innerHTML = "Done";
+                btn.classList.add("active"); 
+            })
+        })
+    </script>
+</body>
+</html>

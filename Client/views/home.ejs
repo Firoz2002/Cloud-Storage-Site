@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Gov-Doc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<style>
+    * {
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .wrapper {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        padding: 40px;
+        font-family: montserrat;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 80px;
+    }
+
+    p {
+        font-size: 45px;
+    }
+
+    button {
+        color: white;
+        background: black;
+        height: 40px;
+        width: 70px;
+        margin-top: 20px;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    @media(min-width: 0px) and (max-width: 500px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 60px;
+        }
+
+        p {
+            font-size: 35px;
+        }
+
+        button {
+            padding: 10px;
+        }
+    }
+</style>
+
+<body>
+    <main>
+      <div class="wrapper">
+        <div class="Container">
+            <h1><u>GOV</u>-DOC</h1>
+            <p>Tired of handling hardcopies and pdfs of offical documents. We got a permanent soution for you</p>
+            <div class="btns">
+                <button onclick="location.href='/login'">Sign-In</button>
+                <button onclick="location.href='/register'">Sign-Up</button>
+            </div>  
+        </div>
+      </div>
+    </main>
+</body>
+</html>

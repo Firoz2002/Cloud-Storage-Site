@@ -1,0 +1,171 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents | Gov-Doc</title>
+    <script src="https://kit.fontawesome.com/5ef28b2280.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    header {
+        position: relative;
+        z-index: 3;
+        height: 4rem;
+        width: 100vw;
+        background-color: white;
+        box-shadow: 4px 21px 20px -28px rgba(0,0,0,0.45);
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f3f3f3;;
+    }
+
+    nav {
+        position: absolute;
+        height: 100vh;
+        width: 4rem;
+        background-color: white;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    main {
+        margin-left: 5rem;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav li {
+        margin: 1.5rem;
+    }
+
+    header .user-profile {
+        border: 0.1rem solid black;
+        border-radius: 25px;
+        padding: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0.8rem;
+        margin-right: 2rem;
+    }
+
+    .container {
+        display: flex;
+    }
+
+    .document {
+        margin-top: 2.5rem;
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        width: 120px;
+        min-height: 150px;
+    }
+
+    .document img {
+        width: 100px;
+        height: 100px;
+    }
+
+    p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+</style>
+<body>
+    <header>
+        <i class="fa-solid fa-bars fa-2xl" style="margin-top: 1.8rem; margin-left: 1rem;"></i>
+        <div class="user-profile">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="username">UserName</span>
+        </div>
+    </header>
+    
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li>
+                <a href="/home">
+                    <i class="fa-solid fa-house fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/family">
+                    <i class="fa-solid fa-user fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/upload">
+                    <i class="fa-solid fa-cloud-arrow-up fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/documents">
+                    <i class="fa-solid fa-folder fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="/about-us">
+                    <i class="fa-solid fa-circle-info fa-xl" style="color: black;"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="container">
+        </div>
+    </main>
+
+    <script>
+        const container = document.querySelector('.container')
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                fetch('/getDocuments', {
+                    method: "GET", 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify()
+                })
+                .then(res => res.json())
+                .then((data) => {
+                  data.forEach(doc => {
+                    addDocument(doc);
+                  });  
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        const addDocument = (doc) => {
+            const div = document.createElement('div');
+            div.classList.add('document');
+
+            div.innerHTML = `
+                <img src="assets/document.png" alt="document">
+                <a href="${doc.downloadURL}"><p>${doc.name}</p></a>
+            `
+            container.appendChild(div);
+        }
+    </script>
+</body>
+</html>
