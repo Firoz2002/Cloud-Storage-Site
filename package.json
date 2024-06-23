@@ -4,7 +4,8 @@
   "description": "This is a web application which allows it's user to store and retrive goverment related documents from web",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Server/app.js"
   },
   "author": "Firoz Kamdar",
   "license": "ISC",
