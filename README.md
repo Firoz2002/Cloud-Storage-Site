@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://res.cloudinary.com/dhlsmeyw1/image/upload/v1718309035/ka7gpbbgzvg20t0gzptp.png" width="150px" height="150px">
+  <img src="https://res.cloudinary.com/dhlsmeyw1/image/upload/v1719156942/document_pmil7k.png" width="150px" height="150px">
   <h1>﻿# Document Cloud-Storage Site</h1>
 </div>
 
